@@ -1,0 +1,16 @@
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\bin\Debug\net5.0\cbt.exe
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\bin\Debug\net5.0\cbt.deps.json
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\bin\Debug\net5.0\cbt.runtimeconfig.json
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\bin\Debug\net5.0\cbt.runtimeconfig.dev.json
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\bin\Debug\net5.0\cbt.dll
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\bin\Debug\net5.0\ref\cbt.dll
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\bin\Debug\net5.0\cbt.pdb
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.csproj.AssemblyReference.cache
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.GeneratedMSBuildEditorConfig.editorconfig
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.AssemblyInfoInputs.cache
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.AssemblyInfo.cs
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.csproj.CoreCompileInputs.cache
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.dll
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\ref\cbt.dll
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.pdb
+M:\Docs\Projects\C#\College\SudokuCBT\cbt\cbt\obj\Debug\net5.0\cbt.genruntimeconfig.cache

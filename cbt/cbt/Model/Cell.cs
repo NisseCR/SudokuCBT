@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection.Metadata;
 
 namespace Sudoku.Model
@@ -20,12 +21,18 @@ namespace Sudoku.Model
         /// </summary>
         public int x, y;
 
+        /// <summary>
+        /// Domain of variable.
+        /// </summary>
+        public HashSet<int> domain;
+
         public Cell(int value, int x, int y, bool set)
         {
             this.value = value;
             this.set = set;
             this.x = x;
             this.y = y;
+            // TODO domain 1..9
         }
         
         /// <summary>
@@ -33,6 +40,7 @@ namespace Sudoku.Model
         /// </summary>
         public Cell Clone()
         {
+            // TODO copy hashset
             return new Cell(this.value, this.x, this.y, this.set);
         }
 

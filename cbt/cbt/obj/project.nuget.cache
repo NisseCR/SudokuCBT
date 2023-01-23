@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KFDWdNacqOG4zn6A37LhyhHzGASmcs3tr8d/hOGtLcFGRfo7WHFm8AkuIzK/1t2rrsX0XH2Hs+bdryu3xXuK4g==",
+  "dgSpecHash": "LH1LGsT8t8M0cKVSmKHAq0rYI8EqMf8swuNf6NVyoOBXSOVoXtvMgq7DdWSmqtnkZCL3XN0z56BV1LY038imUw==",
   "success": true,
-  "projectFilePath": "M:\\Docs\\Projects\\C#\\College\\SudokuLocalSearch\\Sudoku\\Sudoku.csproj",
+  "projectFilePath": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

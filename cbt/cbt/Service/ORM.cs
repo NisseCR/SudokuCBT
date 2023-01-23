@@ -191,5 +191,18 @@ namespace Sudoku.Service
                 .Select(x => grid.tiles[columnNumber, x])
                 .ToArray();
         }
+
+        public int[] GetNeighbourIndices(Grid grid, int i)
+        {
+            // i = 0
+            // collection = 0..8
+            
+            return null;
+        }
+
+        public void ApplyForwardChecking(Grid grid, int[] indices, int allocatedValue)
+        {
+            return;
+        }
     }
 }

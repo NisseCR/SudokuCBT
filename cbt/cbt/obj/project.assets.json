@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "M:\\Docs\\Projects\\C#\\College\\SudokuLocalSearch\\Sudoku\\Sudoku.csproj",
-      "projectName": "Sudoku",
-      "projectPath": "M:\\Docs\\Projects\\C#\\College\\SudokuLocalSearch\\Sudoku\\Sudoku.csproj",
+      "projectUniqueName": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
+      "projectName": "cbt",
+      "projectPath": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
       "packagesPath": "C:\\Users\\nisse\\.nuget\\packages\\",
-      "outputPath": "M:\\Docs\\Projects\\C#\\College\\SudokuLocalSearch\\Sudoku\\obj\\",
+      "outputPath": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nisse\\AppData\\Roaming\\NuGet\\NuGet.Config"
