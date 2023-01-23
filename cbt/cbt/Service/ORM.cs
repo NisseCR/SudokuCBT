@@ -251,9 +251,15 @@ namespace Sudoku.Service
             return leftIndex - offsetDown * 9;
         }
 
-        public void ApplyForwardChecking(Grid grid, int[] indices, int allocatedValue)
+        public bool ApplyForwardChecking(Grid grid, int index, int allocatedValue)
         {
-            return;
-        }
+            HashSet<int> neighbourIndices = this.GetNeighbourIndices(grid, index);
+            foreach (int neighbourIndex in neighbourIndices)
+            {
+                //delete allocatedValue
+                //check if the hashset is empty
+            }
+            return true;
+        } 
     }
 }
