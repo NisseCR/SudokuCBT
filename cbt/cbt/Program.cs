@@ -23,6 +23,8 @@ namespace Sudoku
             var block = orm.ReadBlock(0, 0, grid);
             var row = orm.GetRow(grid, 0);
             var column = orm.GetColumn(grid, 0);
+
+            Console.ReadKey();
             
             // toekennen 4 links boven
             // --> fc neighbours worden consistent
