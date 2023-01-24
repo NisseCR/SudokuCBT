@@ -10,10 +10,10 @@ namespace Sudoku
         static void Main(string[] args)
         {
             // Setup.
-            int example = 5;
+            int example = 1;
 
             Prefabs prefabs = new Prefabs();
-            Grid grid = new Grid(prefabs.GetPrefab(1));
+            Grid grid = new Grid(prefabs.GetPrefab(example));
             State state = new State(grid);
 
             // Debug grid
