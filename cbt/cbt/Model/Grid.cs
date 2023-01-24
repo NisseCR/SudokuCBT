@@ -54,13 +54,32 @@ namespace Sudoku.Model
         /// </summary>
         public override string ToString()
         {
-            string result = "";
-            foreach (Cell cell in this.tiles)
+            // Setup.
+            string result = this.BlockRowEdge(26) + this.GridEdge(26);
+            
+            // Create boxes in representation.
+            for (int i = 0; i < 81; i++)
             {
-                result += $"{cell.value} ";
+                result += $"{this.tiles[i].value}" + this.BlockColumEdge(i) + this.BlockRowEdge(i) + this.GridEdge(i);
             }
+            
+            return result.Remove(result.Length - 2, 2); 
+        }
 
-            return result;
+        private string GridEdge(int i)
+        {
+            return (i + 1) % 9 == 0 ? "\n| " : "";
+        }
+
+        private string BlockColumEdge(int i)
+        {
+            return (i + 1) % 3 == 0 ? " | " : " ";
+        }
+
+        private string BlockRowEdge(int i)
+        {
+            string delimiter = new string('-', 25);
+            return (i + 1) % 27 == 0 ? $"\n{delimiter}" : "";
         }
     }
 }

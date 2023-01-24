@@ -70,8 +70,8 @@ namespace Sudoku.Service
 
         public HashSet<int> GetNeighbourIndices(Grid grid, int index)
         {
-            int[] rowIndices = this.GetRowIndices(grid, index);
-            int[] columnIndices = this.GetColumnIndices(grid, index);
+            int[] rowIndices = this.GetRowIndices(index);
+            int[] columnIndices = this.GetColumnIndices(index);
             int[] blockIndices = this.GetBlockIndices(grid, index);
 
             int[] allIndices = rowIndices.Concat(columnIndices).Concat(blockIndices).ToArray();
@@ -82,26 +82,27 @@ namespace Sudoku.Service
             return indexSet;
         }
 
-        private int[] GetRowIndices(Grid grid, int index)
+        public int[] GetRowIndices(int index)
         {
             int offset = index % 9;
             int startRange = index - offset;
             return Enumerable.Range(startRange, 9).ToArray();
         }
 
-        private int[] GetColumnIndices(Grid grid, int index)
+        public int[] GetColumnIndices(int index)
         {
-            int[] columnIndices = new int[8];
-            for (int i = 1; i < 9; i++)
+            int[] columnIndices = new int[9];
+            for (int i = 0; i < 9; i++)
             {
-                columnIndices[i - 1] = (index + i * 9) % 81;
+                columnIndices[i] = (index + i * 9) % 81;
             }
             return columnIndices;
         }
 
-        private int[] GetBlockIndices(Grid grid, int index)
+        public int[] GetBlockIndices(Grid grid, int index)
         {
             int upperLeftCorner = GetUpperLeftCorner(grid, index);
+            
             List<int> blockIndices = new();
             for (int i = 0; i < 3; i++)
             {
@@ -124,6 +125,18 @@ namespace Sudoku.Service
                 offsetDown++;
             }
             return leftIndex - offsetDown * 9;
+        }
+
+        public Cell[] GetCellsFromLookup(Grid grid, int[] indices)
+        {
+            Cell[] result = new Cell[27];
+
+            for (int i = 0; i < 27; i++)
+            {
+                result[i] = grid.tiles[indices[i]];
+            }
+
+            return result;
         }
 
         public bool ApplyForwardChecking(Grid grid, int index, int allocatedValue)
