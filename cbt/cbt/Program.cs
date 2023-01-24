@@ -14,9 +14,10 @@ namespace Sudoku
 
             Prefabs prefabs = new Prefabs();
             Grid grid = new Grid(prefabs.GetPrefab(1));
+            State state = new State(grid);
 
             // Debug grid
-            Console.WriteLine(grid.ToString());
+            Console.WriteLine(state.ToString());
         }
     }
 }
