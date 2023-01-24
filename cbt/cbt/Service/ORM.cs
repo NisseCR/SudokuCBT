@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Sudoku.Model;
 
 namespace Sudoku.Service
@@ -67,17 +68,73 @@ namespace Sudoku.Service
             return pool.OrderBy(_ => rand.Next()).ToList();
         }
 
-        public int[] GetNeighbourIndices(Grid grid, int i)
+        public HashSet<int> GetNeighbourIndices(Grid grid, int index)
         {
-            // i = 0
-            // collection = 0..8
-            
-            return null;
+            int[] rowIndices = this.GetRowIndices(grid, index);
+            int[] columnIndices = this.GetColumnIndices(grid, index);
+            int[] blockIndices = this.GetBlockIndices(grid, index);
+
+            int[] allIndices = rowIndices.Concat(columnIndices).Concat(blockIndices).ToArray();
+
+            HashSet<int> indexSet = new HashSet<int>(allIndices);
+            indexSet.Remove(index);
+
+            return indexSet;
         }
 
-        public void ApplyForwardChecking(Grid grid, int[] indices, int allocatedValue)
+        private int[] GetRowIndices(Grid grid, int index)
         {
-            return;
+            int offset = index % 9;
+            int startRange = index - offset;
+            return Enumerable.Range(startRange, 9).ToArray();
         }
+
+        private int[] GetColumnIndices(Grid grid, int index)
+        {
+            int[] columnIndices = new int[8];
+            for (int i = 1; i < 9; i++)
+            {
+                columnIndices[i - 1] = (index + i * 9) % 81;
+            }
+            return columnIndices;
+        }
+
+        private int[] GetBlockIndices(Grid grid, int index)
+        {
+            int upperLeftCorner = GetUpperLeftCorner(grid, index);
+            List<int> blockIndices = new();
+            for (int i = 0; i < 3; i++)
+            {
+                List<int> indicesRow = Enumerable.Range(upperLeftCorner + 9 * i, 3).ToList();
+                blockIndices.AddRange(indicesRow);
+            }
+            return blockIndices.ToArray();
+        }
+
+        private int GetUpperLeftCorner(Grid grid, int index)
+        {
+            int offsetRight = index % 3;
+            int leftIndex = index - offsetRight;
+            int height = leftIndex - (leftIndex % 9);
+
+            int offsetDown = 0;
+            while (height % 27 != 0)
+            {
+                height -= 9;
+                offsetDown++;
+            }
+            return leftIndex - offsetDown * 9;
+        }
+
+        public bool ApplyForwardChecking(Grid grid, int index, int allocatedValue)
+        {
+            HashSet<int> neighbourIndices = this.GetNeighbourIndices(grid, index);
+            foreach (int neighbourIndex in neighbourIndices)
+            {
+                //delete allocatedValue
+                //check if the hashset is empty
+            }
+            return true;
+        } 
     }
 }
