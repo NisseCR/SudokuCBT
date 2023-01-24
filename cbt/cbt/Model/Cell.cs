@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 
 namespace Sudoku.Model
 {
-    public class Cell
+    public struct Cell : ICloneable
     {
         /// <summary>
         /// The actual number stored in the sudoku puzzle.
@@ -15,38 +16,36 @@ namespace Sudoku.Model
         /// Indicator that specifies whether the cell is fixed.
         /// </summary>
         public bool set;
-        
+
         /// <summary>
         /// Cell saves their index relative to the grid.
         /// </summary>
-        public int x, y;
+        public int index;
 
         /// <summary>
         /// Domain of variable.
         /// </summary>
         public HashSet<int> domain;
 
-        public Cell(int value, int x, int y, bool set)
+        public Cell(int value, int index, bool set, HashSet<int> domain = null)
         {
             this.value = value;
             this.set = set;
-            this.x = x;
-            this.y = y;
-            // TODO domain 1..9
+            this.index = index;
+            this.domain = domain ?? Enumerable.Range(1, 9).ToHashSet();
         }
         
         /// <summary>
         /// Deep clone a Cell.
         /// </summary>
-        public Cell Clone()
+        public Object Clone()
         {
-            // TODO copy hashset
-            return new Cell(this.value, this.x, this.y, this.set);
+            return new Cell(this.value, this.index, this.set, this.domain);
         }
 
         public override string ToString()
         {
-            return $"v{this.value} ({this.x},{this.y})";
+            return $"v{this.value} i{this.index}";
         }
     }
 }

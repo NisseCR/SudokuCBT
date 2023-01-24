@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "LH1LGsT8t8M0cKVSmKHAq0rYI8EqMf8swuNf6NVyoOBXSOVoXtvMgq7DdWSmqtnkZCL3XN0z56BV1LY038imUw==",
+  "dgSpecHash": "lm0FNm49kDD9p/rTtihGfJzdpwwnQJy0i8AvToCLsK5LXNi84xAfrU0c07lOw6HxoBnBzLe+12zZUAkghAuExw==",
   "success": true,
-  "projectFilePath": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Projects\\c#\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\nisse\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
+  ],
   "logs": []
 }

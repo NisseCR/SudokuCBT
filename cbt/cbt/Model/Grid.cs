@@ -5,94 +5,48 @@ using System.Linq;
 
 namespace Sudoku.Model
 {
-    public class Grid
+    public struct Grid : ICloneable
     {
         /// <summary>
         /// Two-dimensional array of Cells.
         /// </summary>
-        public Cell[,] tiles;
+        public Cell[] tiles;
 
         public Grid(string prefab)
         {
-            this.tiles = this.GetBaseGrid(prefab);
+            this.tiles = Parse(prefab);
         }
-    
-        public Grid(Cell[,] tiles)
+
+        public Grid(Cell[] source)
         {
-            this.tiles = tiles;
-        }
-        
-        /// <summary>
-        /// Deep clone the Cells in a Grid.
-        /// </summary>
-        public Grid Clone()
-        {
-            Cell[,] newTiles = new Cell[9, 9];
-            for (int y = 0; y < 9; y++)
+            Cell[] newTiles = new Cell[81];
+            for (int i = 0; i < 81; i++)
             {
-                for (int x = 0; x < 9; x++)
-                {
-                    newTiles[x, y] = this.tiles[x, y].Clone();
-                }
+                newTiles[i] = (Cell) source[i].Clone();
             }
 
-            return new Grid(newTiles);
+            this.tiles = newTiles;
         }
+
+        public Object Clone()
+        {
+            return new Grid(this.tiles);
+        }
+        
 
         /// <summary>
         /// Create grid from prefab input.
         /// </summary>
-        private Cell[,] GetBaseGrid(string prefab)
+        private static Cell[] Parse(string prefab)
         {
-            List<int> numbers = this.Parse(prefab);
-            return this.MakeGrid(numbers);
+            string[] elems = prefab.Split(' ').ToArray();
+            return elems.Select(CreateCell).ToArray();
         }
-        
-        /// <summary>
-        /// Parse the prefab string, converting it to a list of elements.
-        /// </summary>
-        private List<int> Parse(string prefab)
+
+        private static Cell CreateCell(string item, int index)
         {
-            List<string> elems = prefab.Split(' ').ToList();
-            return elems.Select(int.Parse).ToList();
-        }
-        
-        /// <summary>
-        /// Create the 2-D array from the list of elements.
-        /// </summary>
-        private Cell[,] MakeGrid(List<int> numbers)
-        {
-            Cell[,] newGrid = new Cell[9, 9];
-            
-            for(int y = 0; y < 9; y++)
-            {
-                for(int x = 0; x < 9; x++)
-                {
-                    int number = numbers[x + y * 9];
-                    newGrid[x , y] = new Cell(number, x, y, number != 0);;
-                }
-            }
-            return newGrid;
-        }
-        
-        /// <summary>
-        /// Swap the values of two Cells and save them in the Grid.
-        /// Swapping is done based on the indices saved within the Cell.
-        /// </summary>
-        public void SwapCells((Cell, Cell) swap)
-        {
-            // Cells.
-            Cell cellL = swap.Item1;
-            Cell cellR = swap.Item2;
-            
-            // Swap values.
-            int temp = cellL.value;
-            cellL.value = cellR.value;
-            cellR.value = temp;
-            
-            // Write new data.
-            this.tiles[cellL.x, cellL.y] = cellL;
-            this.tiles[cellR.x, cellR.y] = cellR;
+            int number = int.Parse(item);
+            return new Cell(number, index, number != 0);
         }
 
         /// <summary>
@@ -101,46 +55,12 @@ namespace Sudoku.Model
         public override string ToString()
         {
             string result = "";
-            for (int y = 0; y < 9; y++)
+            foreach (Cell cell in this.tiles)
             {
-                string edgeRow = this.EdgeRow(y);
-                string row = edgeRow;
-                
-                for (int x = 0; x < 9; x++)
-                {
-                    row += this.EdgeColumn(x) + this.tiles[x, y].value;
-                }
-
-                result += row + this.EdgeColumn() + "\n";
+                result += $"{cell.value} ";
             }
 
-            return result + this.EdgeRow();
-        }
-
-        /// <summary>
-        /// Conditional vertical edge.
-        /// </summary>
-        private string EdgeRow(int y = 0)
-        {
-            if (y % 3 == 0)
-            {
-                return new string('-', 27) + "\n";
-            }
-            
-            return "";
-        }
-        
-        /// <summary>
-        /// Conditional horizontal edge.
-        /// </summary>
-        private string EdgeColumn(int x = 0)
-        {
-            if (x % 3 == 0)
-            {
-                return " | ";
-            }
-            
-            return " ";
+            return result;
         }
     }
 }
