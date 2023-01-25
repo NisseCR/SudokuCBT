@@ -49,6 +49,11 @@ namespace Sudoku.Model
             return new Cell(number, index, number != 0);
         }
 
+        public Cell GetCell(int index)
+        {
+            return this.tiles[index];
+        }
+
         /// <summary>
         /// Visualise the grid.
         /// </summary>

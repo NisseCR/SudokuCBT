@@ -40,12 +40,23 @@ namespace Sudoku.Model
         /// </summary>
         public Object Clone()
         {
-            return new Cell(this.value, this.index, this.set, this.domain);
+            HashSet<int> newDomain = new HashSet<int>(this.domain);
+            return new Cell(this.value, this.index, this.set, newDomain);
+        }
+
+        public void ApplyDomainConsistency(int constraintValue)
+        {
+            this.domain.Remove(constraintValue);
+        }
+
+        public bool DomainIsEmpty()
+        {
+            return !this.domain.Any();
         }
 
         public override string ToString()
         {
-            return $"v{this.value} i{this.index}";
+            return $"({this.index}) {this.value} - domainCount: {this.domain.Count}";
         }
     }
 }
