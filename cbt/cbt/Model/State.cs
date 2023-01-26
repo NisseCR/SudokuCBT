@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Sudoku.Service;
 
 namespace Sudoku.Model
 {
@@ -13,20 +9,42 @@ namespace Sudoku.Model
         /// </summary>
         public Grid grid;
 
-        public int domainIndex;
+        public int successorValue;
+        public bool noSuccessors;
+        public int step;
+
+        public State(Grid grid, int? successorValue = null, bool? noSuccessors = false)
+        {
+            this.grid = grid;
+            this.successorValue = successorValue ?? 0;
+            this.noSuccessors = noSuccessors ?? false;
+            this.step = 1;
+        }
         
         public object Clone()
         {
-            throw new NotImplementedException();
+            return new State((Grid) grid.Clone());
         }
 
-        /// <summary>
-        /// Normal constructor.
-        /// </summary>
-        public State(Grid grid)
+        public void FindNextSuccessor(Cell cell)
         {
-            this.grid = grid;
-            this.domainIndex = 1;
+            if (this.successorValue > 9)
+            {
+                this.noSuccessors = true;
+                return;
+            }
+
+            if (!cell.IsInDomain(this.successorValue))
+            {
+                this.successorValue++;
+                this.FindNextSuccessor(cell);
+            }
+        }
+
+        public void GetNextSuccessorValue(Cell cell)
+        {
+            this.successorValue++;
+            this.FindNextSuccessor(cell);
         }
 
         /// <summary>
@@ -34,7 +52,8 @@ namespace Sudoku.Model
         /// </summary>
         public override string ToString()
         {
-            return this.grid.ToString();
+            
+            return $"Next successorValue: ({this.successorValue})" + this.grid.ToString();
         }
     }
 }

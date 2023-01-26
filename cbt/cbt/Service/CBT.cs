@@ -7,97 +7,85 @@ namespace Sudoku.Service
 {
     public class CBT
     {
-
         private int focus;
 
         public CBT()
         {
             this.focus = 0;
         }
-
+        
         /// <summary>
         /// Perform DFS with Backtracking & Forward checking on a incomplete Sudoku puzzle
         /// </summary>
         /// <param name="grid">The incomplete Sudoku puzzle</param>
-        public void Run(Grid grid, ORM orm)
+        public void Run(State startState, ORM orm)
         {
-
             // Initialize Stack
             Stack front = new Stack();
-            front.Push(grid);
-            this.focus = 0;
+            front.Push(startState);
 
-            Grid current;
             while (front.Count > 0 && this.focus < 81)
             {
-                // Get DFS successor.
-                current = (Grid) front.Pop();
-                Grid? successor = this.GetSuccessor(current);
-
-                // Debug
-                Console.WriteLine($"i{this.focus} - c{front.Count}");
-                Console.WriteLine(current.ToString());
+                State current = (State) front.Pop();
                 
+                // Relax and get successor.
+                current = this.PrepareRelaxation(current);
+                State? maybeSuccessor = this.GetSuccessor(current);
+
                 // Backtrack if no successors.
-                if (successor is null)
+                if (maybeSuccessor is null)
                 {
-                    this.focus--;
-                    Console.WriteLine("No successors --> bt");
+                    this.focus -= current.step;
                     continue;
                 }
                 
                 // Forward checking.
-                bool successful = orm.ApplyForwardChecking((Grid) successor, this.focus);
+                State successor = (State) maybeSuccessor;
+                bool successful = orm.ApplyForwardChecking(successor.grid, this.focus);
                 
                 // Backtrack if empty domain.
                 if (!successful)
                 {
                     front.Push(current);
-                    Console.WriteLine("Successorsfutfffff:");
-                    Console.WriteLine(successor.ToString());
-                    Console.WriteLine("Failed fc --> bt");
                     continue;
                 }
                 
                 
                 // Wrap up.
+                front.Push(current);
                 front.Push(successor);
                 this.focus++;
             }
+
+            State result = (State) front.Pop();
+            Console.WriteLine(result);
         }
 
-        private int? GetSuccessorValue(Grid grid)
+        private State PrepareRelaxation(State current)
         {
-            Cell cell = grid.GetCell(this.focus);
-            
-            // Skip predetermined and set cells.
+            Cell cell = current.grid.GetCell(this.focus);
+
             if (cell.set)
             {
+                current.step++;
                 this.focus++;
-                return this.GetSuccessorValue(grid);
+                return this.PrepareRelaxation(current);
             }
             
-            // Reduce successor pool of parent.
-            return cell.PopDomain();
+            current.GetNextSuccessorValue(cell);
+            return current;
         }
 
-        private Grid ApplySuccessorValue(Grid source, int successorValue)
+        private State? GetSuccessor(State current)
         {
-            Grid grid = (Grid) source.Clone();
-            grid.WriteCell(this.focus, successorValue);
-            return grid;
-        }
-
-        private Grid? GetSuccessor(Grid grid)
-        {
-            int? successorValue = this.GetSuccessorValue(grid);
-
-            if (successorValue is null)
+            if (current.noSuccessors)
             {
                 return null;
             }
 
-            return this.ApplySuccessorValue(grid, (int) successorValue);
+            State successor = (State) current.Clone();
+            successor.grid.WriteCell(this.focus, current.successorValue);
+            return successor;
         }
     }
 }

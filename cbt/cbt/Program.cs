@@ -11,12 +11,13 @@ namespace Sudoku
         static void Main(string[] args)
         {
             // Setup.
-            int example = 1;
+            int example = 5;
 
             Prefabs prefabs = new Prefabs();
             Grid grid = new Grid(prefabs.GetPrefab(example));
             ORM orm = new ORM();
             CBT cbt = new CBT();
+            State state = new State(grid);
 
             // Debug grid
             Console.WriteLine(grid.ToString());
@@ -26,7 +27,7 @@ namespace Sudoku
             Console.WriteLine(grid.ToString());
             
             // Run CBT
-            cbt.Run(grid, orm);
+            cbt.Run(state, orm);
         }
     }
 }

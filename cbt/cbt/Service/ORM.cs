@@ -75,7 +75,6 @@ namespace Sudoku.Service
             {
                 if (!this.ReduceSingleDomain(grid, neighbourIndex, sourceCell))
                 {
-                    Console.WriteLine($"domain on index {neighbourIndex} now empty, much sadge");
                     return false;
                 }
             }

@@ -67,16 +67,9 @@ namespace Sudoku.Model
             return !this.domain.Any();
         }
 
-        public int? PopDomain()
+        public bool IsInDomain(int i)
         {
-            if (this.DomainIsEmpty())
-            {
-                return null;
-            }
-            
-            int domainValue = this.domain.First();
-            this.domain.Remove(domainValue);
-            return domainValue;
+            return this.domain.Contains(i);
         }
 
         public void WriteValue(int newValue)
