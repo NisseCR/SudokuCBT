@@ -16,6 +16,7 @@ namespace Sudoku
             Prefabs prefabs = new Prefabs();
             Grid grid = new Grid(prefabs.GetPrefab(example));
             ORM orm = new ORM();
+            CBT cbt = new CBT();
 
             // Debug grid
             Console.WriteLine(grid.ToString());
@@ -23,6 +24,9 @@ namespace Sudoku
             // Setup domains
             orm.SetupDomains(grid);
             Console.WriteLine(grid.ToString());
+            
+            // Run CBT
+            cbt.Run(grid, orm);
         }
     }
 }

@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mikey Lam\\Documents\\UniDocs\\CompIntell\\SudokuCBT\\cbt\\cbt\\cbt.csproj": {}
+    "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mikey Lam\\Documents\\UniDocs\\CompIntell\\SudokuCBT\\cbt\\cbt\\cbt.csproj": {
+    "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mikey Lam\\Documents\\UniDocs\\CompIntell\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
+        "projectUniqueName": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
         "projectName": "cbt",
-        "projectPath": "C:\\Users\\Mikey Lam\\Documents\\UniDocs\\CompIntell\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
-        "packagesPath": "C:\\Users\\Mikey Lam\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mikey Lam\\Documents\\UniDocs\\CompIntell\\SudokuCBT\\cbt\\cbt\\obj\\",
+        "projectPath": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\cbt.csproj",
+        "packagesPath": "C:\\Users\\nisse\\.nuget\\packages\\",
+        "outputPath": "M:\\Docs\\Projects\\C#\\College\\SudokuCBT\\cbt\\cbt\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Mikey Lam\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\nisse\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,8 +43,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -55,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\nisse\\.dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -54,6 +54,18 @@ namespace Sudoku.Model
             return !this.domain.Any();
         }
 
+        public int PopDomain()
+        {
+            int value = this.domain.First();
+            this.domain.Remove(value);
+            return value;
+        }
+
+        public void WriteValue(int newValue)
+        {
+            this.value = newValue;
+        }
+
         public override string ToString()
         {
             return $"({this.index}) {this.value} - domainCount: {this.domain.Count}";

@@ -6,12 +6,19 @@ using Sudoku.Service;
 
 namespace Sudoku.Model
 {
-    public class State
+    public struct State : ICloneable
     {
         /// <summary>
         /// The Sudoku puzzle.
         /// </summary>
         public Grid grid;
+
+        public int domainIndex;
+        
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Normal constructor.
@@ -19,6 +26,7 @@ namespace Sudoku.Model
         public State(Grid grid)
         {
             this.grid = grid;
+            this.domainIndex = 1;
         }
 
         /// <summary>

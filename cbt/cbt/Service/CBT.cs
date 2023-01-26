@@ -11,81 +11,73 @@ namespace Sudoku.Service
         /// <summary>
         /// Perform DFS with Backtracking & Forward checking on a incomplete Sudoku puzzle
         /// </summary>
-        /// <param name="state">The incomplete Sudoku puzzle</param>
-        public void Run(State state)
+        /// <param name="grid">The incomplete Sudoku puzzle</param>
+        public void Run(Grid grid, ORM orm)
         {
 
             // Initialize Stack
-            Stack CBT = new Stack();
-            CBT.Push(state);
+            Stack front = new Stack();
+            front.Push(grid);
 
-            State currentState = null;
-
-            while (CBT.Count > 0)
+            Grid currentGrid;
+            int index = 0;
+            while (front.Count > 0 && index < 81)
             {
-                currentState = (State)CBT.Pop();
-
-                // Goal State
-                if (false) // If the last index of the array is reached
+                // Get DFS successor.
+                currentGrid = (Grid) front.Pop();
+                Grid? nextGrid = this.GetSuccessor(currentGrid, index);
+                
+                // Debug
+                Console.WriteLine($"i{index} - c{front.Count}");
+                Console.WriteLine(nextGrid.ToString());
+                
+                // Backtrack if no successors.
+                if (nextGrid is null)
                 {
-                    break;
+                    index--;
+                    continue;
                 }
 
-                List<State> successors = GetSuccessors(currentState);
-
-                foreach(State successor in successors)
+                // Forward checking.
+                bool successful = orm.ApplyForwardChecking((Grid) nextGrid, index);
+                
+                // Backtrack if empty domain.
+                if (!successful)
                 {
-                    CBT.Push(successor);
+                    front.Push(grid);
+                    continue;
                 }
+                
+                // Wrap up.
+                front.Push(nextGrid);
+                index++;
+            }
+        }
 
+        private Grid? GetSuccessor(Grid grid, int index)
+        {
+            Cell cell = grid.GetCell(index);
+            
+            // Skip predetermined and set cells.
+            if (cell.set)
+            {
+                return this.GetSuccessor(grid, ++index);
             }
             
-            Console.WriteLine(currentState);
-        }
-
-        /// <summary>
-        /// Create a list of valid successors from a state
-        /// </summary>
-        /// <param name="state"></param>
-        /// <returns></returns>
-        public List<State> GetSuccessors(State state)
-        {
-            State currentState = state;
-            List<State> successors = new List<State>();
-
-            // Get all available domain options and loop until none left
-            while (false)
+            // If all successors have already been checked.
+            if (cell.DomainIsEmpty())
             {
-                /*
-                //Create successor state with new domain option
-                State newSuccessor = new state;
-
-                if (BacktrackCheck(newSuccessor) && ForwardCheck(newSuccessor))
-                {
-                    successors.Add(newSuccessor);
-                }
-                */
+                return null;
             }
-
-            return successors;
-        }
-
-        public bool BacktrackCheck(State state)
-        {
-            if (false) // Check if state is a partial solution
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool ForwardCheck(State state)
-        {
-            if (false) // Check if state has no empty domains
-            {
-                return true;
-            }
-            return false;
+            
+            // Reduce successor pool of parent.
+            int domainValue = cell.PopDomain();
+            
+            // Assign value in successor grid.
+            Grid nextGrid = (Grid) grid.Clone();
+            Cell nextCell = nextGrid.GetCell(index);
+            nextCell.WriteValue(domainValue);
+            return nextGrid;
         }
     }
 }
