@@ -7,23 +7,6 @@ namespace Sudoku.Service
 {
     public class DFS
     {
-        // DFS w/ backtracking front and neighbour selection
-        // 2 cases where backtracking is required:
-        //  - Not a partial solution (mayhaps not need)
-        //  - Empty domain in forward checking
-        // Mikey
-
-        //TO DO
-        // Create stack and start with beginstate
-        // Expand every available option in domain in first variable 
-        //
-        // For successors
-        //   if:
-        //    - Not a partial solution (mayhaps not need)
-        //    - Empty domain in forward checking
-        //   Don't expand successor
-        //  
-        // Continue process until state with last index is reached
 
         /// <summary>
         /// Perform DFS with Backtracking & Forward checking on a incomplete Sudoku puzzle
@@ -59,11 +42,6 @@ namespace Sudoku.Service
             
             Console.WriteLine(currentState);
         }
-
-        // Use domain of current index of state and for every available option
-        // Check if
-        //  - Not a partial solution (mayhaps not need)
-        //  - Empty domain in forward checking
 
         /// <summary>
         /// Create a list of valid successors from a state
@@ -101,7 +79,7 @@ namespace Sudoku.Service
             return false;
         }
 
-        public bool forwardCheck(State state)
+        public bool ForwardCheck(State state)
         {
             if (false) // Check if state has no empty domains
             {
