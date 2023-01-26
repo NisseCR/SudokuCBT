@@ -8,11 +8,21 @@ namespace Sudoku.Service
 {
     public class ORM
     {
+        /// <summary>
+        /// Get set of neighbouring row indices based on given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public HashSet<int> GetRowIndices(int index)
         {
             return Enumerable.Range(index - index % 9, 9).ToHashSet();
         }
-
+        
+        /// <summary>
+        /// Get set of neighbouring column indices based on given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public HashSet<int> GetColumnIndices(int index)
         {
             HashSet<int> result = new();
@@ -23,6 +33,11 @@ namespace Sudoku.Service
             return result;
         }
         
+        /// <summary>
+        /// Get index of upper-left corner of a block, based on given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         private int GetUpperLeftCorner(int index)
         {
             int offsetRight = index % 3;
@@ -37,7 +52,12 @@ namespace Sudoku.Service
             }
             return leftIndex - offsetDown * 9;
         }
-
+        
+        /// <summary>
+        /// Get set of neighbouring block indices based on given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public HashSet<int>  GetBlockIndices(int index)
         {
             int upperLeftCorner = GetUpperLeftCorner(index);
@@ -51,6 +71,11 @@ namespace Sudoku.Service
             return result;
         }
         
+        /// <summary>
+        /// Get set of neighbouring row-, column- and block indices based on given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public HashSet<int> GetNeighbourIndices(int index)
         {
             HashSet<int> result = this.GetBlockIndices(index);
@@ -59,13 +84,26 @@ namespace Sudoku.Service
             result.Remove(index);
             return result;
         }
-
+        
+        /// <summary>
+        /// Make cell on given neighbour index consistent by reducing its domain.
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="neighbourIndex"></param>
+        /// <param name="sourceCell"></param>
+        /// <returns></returns>
         private bool ReduceSingleDomain(Grid grid, int neighbourIndex, Cell sourceCell)
         {
             Cell cell = grid.GetCell(neighbourIndex);
             return cell.ApplyDomainConsistency(sourceCell.value);
         }
-
+        
+        /// <summary>
+        /// Make constraints reliant on given index consistent. Early stop if empty domain is created in said way.
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public bool ApplyForwardChecking(Grid grid, int index)
         {
             Cell sourceCell = grid.GetCell(index);
@@ -80,7 +118,11 @@ namespace Sudoku.Service
             }
             return true;
         }
-
+        
+        /// <summary>
+        /// Make all domains consistent.
+        /// </summary>
+        /// <param name="grid"></param>
         public void SetupDomains(Grid grid)
         {
             for (int i = 0; i < 81; i++)

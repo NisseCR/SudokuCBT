@@ -43,7 +43,12 @@ namespace Sudoku.Model
             HashSet<int> newDomain = new HashSet<int>(this.domain);
             return new Cell(this.value, this.index, this.set, newDomain);
         }
-
+        
+        /// <summary>
+        /// Reduce domains of non-set cells. Returns whether domain is empty after reduction.
+        /// </summary>
+        /// <param name="constraintValue"></param>
+        /// <returns></returns>
         public bool ApplyDomainConsistency(int constraintValue)
         {
             if (this.set)
@@ -70,11 +75,6 @@ namespace Sudoku.Model
         public bool IsInDomain(int i)
         {
             return this.domain.Contains(i);
-        }
-
-        public void WriteValue(int newValue)
-        {
-            this.value = newValue;
         }
 
         public override string ToString()

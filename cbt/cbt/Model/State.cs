@@ -25,7 +25,11 @@ namespace Sudoku.Model
         {
             return new State((Grid) grid.Clone());
         }
-
+        
+        /// <summary>
+        /// Dynamically look for next successor, if there are any left.
+        /// </summary>
+        /// <param name="cell"></param>
         public void FindNextSuccessor(Cell cell)
         {
             if (this.successorValue > 9)
@@ -40,7 +44,11 @@ namespace Sudoku.Model
                 this.FindNextSuccessor(cell);
             }
         }
-
+        
+        /// <summary>
+        /// Wrapper method.
+        /// </summary>
+        /// <param name="cell"></param>
         public void GetNextSuccessorValue(Cell cell)
         {
             this.successorValue++;
