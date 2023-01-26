@@ -8,6 +8,13 @@ namespace Sudoku.Service
     public class CBT
     {
 
+        private int focus;
+
+        public CBT()
+        {
+            this.focus = 0;
+        }
+
         /// <summary>
         /// Perform DFS with Backtracking & Forward checking on a incomplete Sudoku puzzle
         /// </summary>
@@ -18,66 +25,79 @@ namespace Sudoku.Service
             // Initialize Stack
             Stack front = new Stack();
             front.Push(grid);
+            this.focus = 0;
 
-            Grid currentGrid;
-            int index = 0;
-            while (front.Count > 0 && index < 81)
+            Grid current;
+            while (front.Count > 0 && this.focus < 81)
             {
                 // Get DFS successor.
-                currentGrid = (Grid) front.Pop();
-                Grid? nextGrid = this.GetSuccessor(currentGrid, index);
-                
+                current = (Grid) front.Pop();
+                Grid? successor = this.GetSuccessor(current);
+
                 // Debug
-                Console.WriteLine($"i{index} - c{front.Count}");
-                Console.WriteLine(nextGrid.ToString());
+                Console.WriteLine($"i{this.focus} - c{front.Count}");
+                Console.WriteLine(current.ToString());
                 
                 // Backtrack if no successors.
-                if (nextGrid is null)
+                if (successor is null)
                 {
-                    index--;
+                    this.focus--;
+                    Console.WriteLine("No successors --> bt");
                     continue;
                 }
-
+                
                 // Forward checking.
-                bool successful = orm.ApplyForwardChecking((Grid) nextGrid, index);
+                bool successful = orm.ApplyForwardChecking((Grid) successor, this.focus);
                 
                 // Backtrack if empty domain.
                 if (!successful)
                 {
-                    front.Push(grid);
+                    front.Push(current);
+                    Console.WriteLine("Successorsfutfffff:");
+                    Console.WriteLine(successor.ToString());
+                    Console.WriteLine("Failed fc --> bt");
                     continue;
                 }
                 
+                
                 // Wrap up.
-                front.Push(nextGrid);
-                index++;
+                front.Push(successor);
+                this.focus++;
             }
         }
 
-        private Grid? GetSuccessor(Grid grid, int index)
+        private int? GetSuccessorValue(Grid grid)
         {
-            Cell cell = grid.GetCell(index);
+            Cell cell = grid.GetCell(this.focus);
             
             // Skip predetermined and set cells.
             if (cell.set)
             {
-                return this.GetSuccessor(grid, ++index);
-            }
-            
-            // If all successors have already been checked.
-            if (cell.DomainIsEmpty())
-            {
-                return null;
+                this.focus++;
+                return this.GetSuccessorValue(grid);
             }
             
             // Reduce successor pool of parent.
-            int domainValue = cell.PopDomain();
-            
-            // Assign value in successor grid.
-            Grid nextGrid = (Grid) grid.Clone();
-            Cell nextCell = nextGrid.GetCell(index);
-            nextCell.WriteValue(domainValue);
-            return nextGrid;
+            return cell.PopDomain();
+        }
+
+        private Grid ApplySuccessorValue(Grid source, int successorValue)
+        {
+            Grid grid = (Grid) source.Clone();
+            grid.WriteCell(this.focus, successorValue);
+            return grid;
+        }
+
+        private Grid? GetSuccessor(Grid grid)
+        {
+            int? successorValue = this.GetSuccessorValue(grid);
+
+            if (successorValue is null)
+            {
+                return null;
+            }
+
+            return this.ApplySuccessorValue(grid, (int) successorValue);
         }
     }
 }

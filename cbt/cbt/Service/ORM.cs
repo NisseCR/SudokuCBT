@@ -63,14 +63,7 @@ namespace Sudoku.Service
         private bool ReduceSingleDomain(Grid grid, int neighbourIndex, Cell sourceCell)
         {
             Cell cell = grid.GetCell(neighbourIndex);
-            cell.ApplyDomainConsistency(sourceCell.value);
-            
-            if (cell.DomainIsEmpty())
-            {
-                return false;
-            }
-
-            return true;
+            return cell.ApplyDomainConsistency(sourceCell.value);
         }
 
         public bool ApplyForwardChecking(Grid grid, int index)
@@ -82,6 +75,7 @@ namespace Sudoku.Service
             {
                 if (!this.ReduceSingleDomain(grid, neighbourIndex, sourceCell))
                 {
+                    Console.WriteLine($"domain on index {neighbourIndex} now empty, much sadge");
                     return false;
                 }
             }

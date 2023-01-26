@@ -44,9 +44,22 @@ namespace Sudoku.Model
             return new Cell(this.value, this.index, this.set, newDomain);
         }
 
-        public void ApplyDomainConsistency(int constraintValue)
+        public bool ApplyDomainConsistency(int constraintValue)
         {
+            if (this.set)
+            {
+                return true;
+            }
+            
             this.domain.Remove(constraintValue);
+            
+            if (this.DomainIsEmpty())
+            {
+                return false;
+            }
+
+            return true;
+
         }
 
         public bool DomainIsEmpty()
@@ -54,11 +67,16 @@ namespace Sudoku.Model
             return !this.domain.Any();
         }
 
-        public int PopDomain()
+        public int? PopDomain()
         {
-            int value = this.domain.First();
-            this.domain.Remove(value);
-            return value;
+            if (this.DomainIsEmpty())
+            {
+                return null;
+            }
+            
+            int domainValue = this.domain.First();
+            this.domain.Remove(domainValue);
+            return domainValue;
         }
 
         public void WriteValue(int newValue)

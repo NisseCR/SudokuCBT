@@ -54,6 +54,12 @@ namespace Sudoku.Model
             return this.tiles[index];
         }
 
+        public void WriteCell(int index, int value)
+        {
+            this.tiles[index].value = value;
+            this.tiles[index].set = true;
+        }
+
         /// <summary>
         /// Visualise the grid.
         /// </summary>
