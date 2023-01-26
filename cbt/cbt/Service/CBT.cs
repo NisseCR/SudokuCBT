@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Sudoku.Model;
 
 namespace Sudoku.Service
@@ -8,10 +9,16 @@ namespace Sudoku.Service
     public class CBT
     {
         private int focus;
+        
+        /// <summary>
+        /// Tool to measure execution time.
+        /// </summary>
+        private Stopwatch watch;
 
         public CBT()
         {
             this.focus = 0;
+            this.watch = new Stopwatch();
         }
         
         /// <summary>
@@ -20,6 +27,8 @@ namespace Sudoku.Service
         /// <param name="grid">The incomplete Sudoku puzzle</param>
         public void Run(State startState, ORM orm)
         {
+            this.watch.Start();
+            
             // Initialize Stack
             Stack front = new Stack();
             front.Push(startState);
@@ -49,16 +58,16 @@ namespace Sudoku.Service
                     front.Push(current);
                     continue;
                 }
-                
-                
+
                 // Wrap up.
                 front.Push(current);
                 front.Push(successor);
                 this.focus++;
             }
-
-            State result = (State) front.Pop();
-            Console.WriteLine(result);
+            
+            this.watch.Stop();
+            State solution = (State) front.Pop();
+            this.WriteResult(solution);
         }
 
         private State PrepareRelaxation(State current)
@@ -86,6 +95,14 @@ namespace Sudoku.Service
             State successor = (State) current.Clone();
             successor.grid.WriteCell(this.focus, current.successorValue);
             return successor;
+        }
+        
+        /// <summary>
+        /// Print the solution.
+        /// </summary>
+        private void WriteResult(State state)
+        {
+            Console.WriteLine($"Solution:\nExecution Time: {watch.ElapsedMilliseconds} ms {state.grid}");
         }
     }
 }
